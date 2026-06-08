@@ -6,42 +6,30 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import Nos.Fuimos.Mudiales.ui.theme.ProyectoMundial_26_MobileTheme
+import Nos.Fuimos.Mudiales.ui.navigation.MundialNavGraph
+import Nos.Fuimos.Mudiales.viewmodels.MundialViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            ProyectoMundial_26_MobileTheme {
+            MaterialTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
+                    // Guardamos el ViewModel de forma reactiva en la memoria de Compose
+                    val mainViewModel = remember { MundialViewModel() }
+
+                    // Llamamos al enrutador formal pasando el parámetro limpio
+                    MundialNavGraph(
+                        mainViewModel = mainViewModel,
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    ProyectoMundial_26_MobileTheme {
-        Greeting("Android")
     }
 }

@@ -8,12 +8,12 @@ plugins {
 
 android {
     namespace = "Nos.Fuimos.Mudiales"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "Nos.Fuimos.Mudiales"
         minSdk = 31
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
 

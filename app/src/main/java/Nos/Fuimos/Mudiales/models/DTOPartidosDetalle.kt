@@ -10,7 +10,7 @@ data class DTOPartidosDetalle(
         val grupo: String,
         val fecha: String,
         val flag1: String,
-        val flag2: String
-        val precio: String
+        val flag2: String,
+        val precio: String,
         val estadio: String
 )
