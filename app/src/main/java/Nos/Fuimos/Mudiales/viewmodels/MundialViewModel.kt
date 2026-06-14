@@ -28,16 +28,26 @@ class MundialViewModel : ViewModel() {
 
     fun cargarPartidosDesdeRepositorio() {
         viewModelScope.launch {
-            uiState = uiState.copy(
-                partidos = repository.fetchPartidosListaLocal(),
-                isLoading = false
-            )
+            uiState = uiState.copy(isLoading = true)
+            try {
+                val listaDesdeInternet = repository.fetchPartidosLista()
+                uiState = uiState.copy(
+                    partidos = listaDesdeInternet,
+                    isLoading = false
+                )
+            } catch (e: Exception) {
+                uiState = uiState.copy(
+                    partidos = repository.fetchPartidosListaLocal(),
+                    isLoading = false
+                )
+            }
         }
     }
 
     fun seleccionarPartido(id: Int) {
         viewModelScope.launch {
-            val detalle = repository.fetchPartidoDetalleLocal(id)
+            // 📌 Llamamos a la nueva función de internet del repositorio
+            val detalle = repository.fetchPartidoDetalle(id)
             uiState = uiState.copy(
                 partidoSeleccionado = detalle,
                 isLoading = false

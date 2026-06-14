@@ -19,7 +19,7 @@ fun PartidosListaScreen(
     onPartidoClick: (Int) -> Unit
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
-        TopAppBar(title = { Text("Mundial 2026 - Selección Argentina", fontWeight = FontWeight.Bold) })
+        TopAppBar(title = { Text("Mundial 2026 - Nos_Fuimos_Mundiales", fontWeight = FontWeight.Bold) })
 
         LazyColumn(
             modifier = Modifier.fillMaxSize(),

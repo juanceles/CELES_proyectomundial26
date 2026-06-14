@@ -6,46 +6,69 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
+import kotlinx.serialization.Serializable
 import Nos.Fuimos.Mudiales.ui.screens.PartidosListaScreen
 import Nos.Fuimos.Mudiales.ui.screens.PartidoDetalleScreen
 import Nos.Fuimos.Mudiales.viewmodels.MundialViewModel
 
-enum class MundialRutas {
-    LISTA_PARTIDOS,
-    DETALLE_PARTIDO
-}
+// 1️⃣ DEFINICIÓN DE RUTAS SERIALIZABLES (Reemplazan al viejo enum)
+@Serializable
+object ListaPartidosRoute
+
+@Serializable
+data class DetallePartidoRoute(
+    val partidoId: Int
+)
 
 @Composable
 fun MundialNavGraph(
     mainViewModel: MundialViewModel,
     modifier: Modifier = Modifier
 ) {
-    // 📌 Esto lee el estado dinámico del ciclo de vida de Android de forma reactiva
     val state = mainViewModel.uiState
+
+    // 2️⃣ CREACIÓN DEL CONTROLADOR DE NAVEGACIÓN OFICIAL
+    val navController = rememberNavController()
 
     Box(modifier = modifier.fillMaxSize()) {
         if (state.isLoading) {
             CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
         } else {
-            // El enrutador evalúa el estado retenido por el ciclo de vida
-            val rutaActual = if (state.partidoSeleccionado == null) {
-                MundialRutas.LISTA_PARTIDOS
-            } else {
-                MundialRutas.DETALLE_PARTIDO
-            }
-
-            when (rutaActual) {
-                MundialRutas.LISTA_PARTIDOS -> {
+            // 3️⃣ ESTRUCTURA DEL NAVHOST CON TIPADO ESTRICTO
+            NavHost(
+                navController = navController,
+                startDestination = ListaPartidosRoute
+            ) {
+                // Pantalla de la Lista
+                composable<ListaPartidosRoute>() {
                     PartidosListaScreen(
                         partidos = state.partidos,
-                        onPartidoClick = { id -> mainViewModel.seleccionarPartido(id) }
+                        onPartidoClick = { id ->
+                            // Buscamos los datos en el ViewModel primero
+                            mainViewModel.seleccionarPartido(id)
+                            // Navegamos pasando la ruta con su ID correspondiente
+                            navController.navigate(DetallePartidoRoute(partidoId = id))
+                        }
                     )
                 }
-                MundialRutas.DETALLE_PARTIDO -> {
+
+                // Pantalla del Detalle
+                composable<DetallePartidoRoute>() { backStackEntry ->
+                    // Extraemos los parámetros de la ruta de forma segura y tipada
+                    val rutaDetalle = backStackEntry.toRoute<DetallePartidoRoute>()
+
                     state.partidoSeleccionado?.let { partido ->
                         PartidoDetalleScreen(
                             partido = partido,
-                            onVolverClick = { mainViewModel.volverAlListado() }
+                            onVolverClick = {
+                                mainViewModel.volverAlListado()
+                                // Regresa a la pantalla anterior destruyendo el detalle de la pila
+                                navController.popBackStack()
+                            }
                         )
                     }
                 }
