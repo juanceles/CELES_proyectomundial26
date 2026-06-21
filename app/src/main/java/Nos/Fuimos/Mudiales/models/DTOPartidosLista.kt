@@ -1,14 +1,15 @@
 package Nos.Fuimos.Mudiales.models
 
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.SerialName // <-- AGREGAR ESTO
 
 @Serializable
 data class DTOPartidosLista(
         val id: Int,
-        val equipo1: String,
-        val equipo2: String,
+        @SerialName("local") val equipo1: String,
+        @SerialName("visitante") val equipo2: String,
         val grupo: String,
-        val fecha: String,
-        val flag1: String,
-        val flag2: String
+        @SerialName("fechaHora") val fecha: String,
+        @SerialName("banderaLocal") val flag1: String,
+        @SerialName("banderaVisitante") val flag2: String
 )

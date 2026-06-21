@@ -6,11 +6,11 @@ import Nos.Fuimos.Mudiales.models.DTOPartidosDetalle
 
 interface MundialApiService {
 
-    // Endpoint para el Listado General de Partidos
-    @GET(value = "v1/76f0acff-5d49-4c73-99d8-842da8fef40c")
+    // Endpoint real para el Listado General en tu backend de .NET
+    @GET("api/partidos")
     suspend fun getPartidosLista(): List<DTOPartidosLista>
 
-    // Endpoint para el Detalle Extendido de Partidos
-    @GET(value = "v1/a0626b69-fdab-4c33-b2eb-a4b94e6a2d02")
+    // Endpoint real para el Detalle que consume el mismo fixture completo
+    @GET("api/partidos")
     suspend fun getPartidosDetalle(): List<DTOPartidosDetalle>
 }

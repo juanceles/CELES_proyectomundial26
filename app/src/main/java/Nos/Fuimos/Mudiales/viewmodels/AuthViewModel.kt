@@ -47,12 +47,13 @@ class AuthViewModel : ViewModel() {
 
     fun iniciarSesion() {
         if (usuarioInput.isBlank() || contraseniaInput.isBlank()) {
-            loginState = LoginState.Error("Los campos no pueden estar vacíos")
+            loginState = LoginState.Error(mensaje = "Los campos no pueden estar vacios")
             return
         }
-        // VALIDACIÓN: Contraseña entre 4 y 8 dígitos/caracteres
-        if (contraseniaInput.length < 4 || contraseniaInput.length > 8) {
-            loginState = LoginState.Error("La contraseña debe tener entre 4 y 8 caracteres")
+
+        // VALIDACIÓN: Contraseña entre 4 y 20 dígitos/caracteres (¡Solo cambiamos el 8 por el 20!)
+        if (contraseniaInput.length < 4 || contraseniaInput.length > 20) {
+            loginState = LoginState.Error(mensaje = "La contraseña debe tener entre 4 y 20 caracteres")
             return
         }
 

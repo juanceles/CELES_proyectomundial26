@@ -56,7 +56,7 @@ fun LoginScreen(
                     viewModel.usuarioInput = it
                     viewModel.resetState()
                 },
-                label = { Text("Usuario o Correo") },
+                label = { Text("Correo de Usuario")},
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true,
                 colors = OutlinedTextFieldDefaults.colors(
