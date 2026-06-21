@@ -54,6 +54,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.coil.compose)
 
     // Testing
     testImplementation(libs.junit)
@@ -76,6 +77,4 @@ dependencies {
     // Convertidor oficial de Retrofit para Kotlinx Serialization
     implementation(libs.retrofit.converter.kotlinx.serialization)
 
-    implementation("androidx.navigation:navigation-compose:2.8.5")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
 }

@@ -11,14 +11,25 @@ object RetrofitClient {
 
     val api: MundialApiService by lazy {
         Retrofit.Builder()
-            // 📌 Pegamos la URL base apuntando al servicio de Mocki (terminando en /)
             .baseUrl("https://mocki.io")
             .addConverterFactory(
                 json.asConverterFactory(
-                    "application/json".toMediaType()
+                    contentType = "application/json".toMediaType()
                 )
             )
             .build()
             .create(MundialApiService::class.java)
+    }
+
+    val authApi: AuthApiService by lazy {
+        Retrofit.Builder()
+            .baseUrl("https://mocki.io")
+            .addConverterFactory(
+                json.asConverterFactory(
+                    contentType = "application/json".toMediaType()
+                )
+            )
+            .build()
+            .create(AuthApiService::class.java)
     }
 }
